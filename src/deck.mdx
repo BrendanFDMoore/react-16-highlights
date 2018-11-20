@@ -1,6 +1,92 @@
-# This is the title of my deck
+import { Appear } from 'mdx-deck';
+
+# React 16
+<Appear>
+  <img src={'https://i.pinimg.com/originals/21/6c/4e/216c4eb9707772c378fe76ba4929bf46.gif'} />
+</Appear>
+
 ---
-# About Me
+# Highlights
+
+<Appear>
+  <h3>Not everything</h3>
+  <h4>Lots of resources online to learn more -- start with the React changelog and blog</h4>
+</Appear>
+
+---
+## v16.0
+
+* Fiber rendering (prep for async/concurrent)
+* Fragments (& strings)
+* Portals
+* Error Boundary
+
+---
+
+# What is Fiber?
+
+<Appear>
+  <h2>A new rendering engine -- that's all.</h2>
+  <h2>But there are some consequences.</h2>
+  <div style={{ display: 'block', background:'#cccccc', width: '80%', padding: '10p'}}>
+    When replacing &lt;A /&gt; with &lt;B /&gt;, B.componentWillMount now always happens before A.componentWillUnmount. Previously, A.componentWillUnmount could fire first in some cases.
+  </div>
+</Appear>
+
+```notes
+Fiber isn't a "feature" you would be using directly, it's plumbing.
+It was a necessary step to _enable_ other features like lazy/Suspense and concurrent rendering.
+```
+---
+
+## v16.1 & 16.2
+
+<Appear>
+  <h3><i>Mostly fixes and optimizations</i></h3>
+  <iframe
+    seamless="seamless"
+    style={{
+      width: '80%',
+      border: 'none',
+      maxWidth: '500px',
+      display: 'block',
+    }}
+    src="https://getyarn.io/yarn-clip/embed/e773e6ae-790a-4c10-918b-1d941cb9dee0?autoplay=false">
+  </iframe>
+</Appear>
+
+---
+
+## v16.3 
+  * Context
+  * createRef & forwardRef // remove?
+  * getDerivedStateFromProps
+  * Strict Mode
+  * Packages: Lifecycle Compat, Subscriptions, ReactIs
+
+---
+
+## v16.4 & 16.5: 
+  * Profiler
+
+---
+
+## v16.6
+  * lazy & Suspense
+  * memo  
+
+---
+
+# We Can See The Future!
+
+* 16.7 (alpha)
+  * Concurrent (née _async_) rendering
+  * Hooks
+* ...and beyond
+  * Scheduler
+  * Cache
+
+
 ---
 ```jsx
 <CodeSnippet />
