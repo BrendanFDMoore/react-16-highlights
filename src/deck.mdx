@@ -1,4 +1,16 @@
-import { Appear } from 'mdx-deck';
+import { Appear, Head } from 'mdx-deck';
+import { Split } from 'mdx-deck/layouts';
+import { CodeSurfer } from 'mdx-deck-code-surfer';
+
+<Head>
+  <title>React 16 Highlights</title>
+  {/* <meta name='twitter:card' content='summary_large_image' />
+  <meta name='twitter:site' content='@jxnblk' />
+  <meta name='twitter:title' content='My Presentation' />
+  <meta name='twitter:description' content='A really great presentation' />
+  <meta name='twitter:image' content='https://example.com/card.png' /> */}
+</Head>
+
 
 # React 16
 <Appear>
@@ -16,8 +28,8 @@ import { Appear } from 'mdx-deck';
 ---
 ## v16.0
 
-* Fiber rendering (prep for async/concurrent)
-* Fragments (& strings)
+* Fiber
+* Fragments (& strings) 
 * Portals
 * Error Boundary
 
@@ -28,8 +40,9 @@ import { Appear } from 'mdx-deck';
 <Appear>
   <h2>A new rendering engine -- that's all.</h2>
   <h2>But there are some consequences.</h2>
-  <div style={{ display: 'block', background:'#cccccc', width: '80%', padding: '10p'}}>
+  <div style={{ display: 'block', backgroundColor:'#cccccc', width: '80%', padding: '10p'}}>
     When replacing &lt;A /&gt; with &lt;B /&gt;, B.componentWillMount now always happens before A.componentWillUnmount. Previously, A.componentWillUnmount could fire first in some cases.
+    <br />-- React changelog
   </div>
 </Appear>
 
@@ -37,6 +50,85 @@ import { Appear } from 'mdx-deck';
 Fiber isn't a "feature" you would be using directly, it's plumbing.
 It was a necessary step to _enable_ other features like lazy/Suspense and concurrent rendering.
 ```
+---
+## Why is this a problem?
+
+<Appear>
+  <p>Imagine we re-render some component with lifecycle...</p>
+  <p>Let's call the first instance A and the second B</p>
+</Appear>
+
+---
+
+export default Split
+
+<Appear>
+  <h4>Before</h4>
+  <ul>
+    <li style={{listStyleType:'none'}}>Trigger First Render</li>
+    <li style={{listStyleType:'none'}}>Mount A</li>
+    <li style={{listStyleType:'none'}}>Trigger Second Render</li>
+    <li style={{listStyleType:'none'}}>Unmount A</li>
+    <li style={{listStyleType:'none', color: 'red'}}>Mount B</li>
+  </ul>
+</Appear>
+
+<Appear>
+  <h4>After</h4>
+  <ul>
+    <li style={{listStyleType:'none'}}>Trigger First Render</li>
+    <li style={{listStyleType:'none'}} >Mount A</li>
+    <li style={{listStyleType:'none'}}>Trigger Second Render</li>
+    <li style={{listStyleType:'none', color: 'red'}}>Mount B</li>
+    <li style={{listStyleType:'none'}}>Unmount A</li>
+  </ul>
+</Appear>
+
+---
+
+## So what?
+
+<Appear>
+  <p>I say we take a look at Table Orchestrator</p>
+</Appear>
+
+---
+
+<CodeSurfer
+  code={require("!raw-loader!./code/to-extract.js")}
+  language="javascript"
+  steps={[
+    { lines: [1], notes: "In the constructor..." },
+    { range: [4, 8], notes: "...we dispatch an init action."},
+    { range: [11, 16], notes: "And then in componentWillUnmount, we (usually) delete the state" },
+    { notes: "Who wants to describe the problem is?" },
+  ]}
+/>
+
+---
+
+## The fix
+<Appear>
+  <p>Well, workaround.</p>
+</Appear>
+
+---
+
+<CodeSurfer
+  code={require("!raw-loader!./code/to-extract-fix.js")}
+  language="javascript"
+  steps={[
+    { lines: [5, 7], notes: "Assign a UUID to the instance..." },
+    { lines: [22, 26], notes: "...and track the latest initialized instance." },
+    { lines: [17], notes: "Then, when we unmount, the delete carries the instance too" },
+    { range: [31, 33], notes: "and we check the id before clearing the state." },
+  ]}
+/>
+---
+# Takeaway 
+<Appear>
+  <img src={'https://i.pinimg.com/originals/21/6c/4e/216c4eb9707772c378fe76ba4929bf46.gif'} />
+</Appear>
 ---
 
 ## v16.1 & 16.2
@@ -54,9 +146,11 @@ It was a necessary step to _enable_ other features like lazy/Suspense and concur
     src="https://getyarn.io/yarn-clip/embed/e773e6ae-790a-4c10-918b-1d941cb9dee0?autoplay=false">
   </iframe>
 </Appear>
-
 ---
 
+https://thumbs.gfycat.com/MagnificentFoolishArcticfox-size_restricted.gif
+
+---
 ## v16.3 
   * Context
   * createRef & forwardRef // remove?
