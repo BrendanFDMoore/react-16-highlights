@@ -30,7 +30,7 @@ import { CodeSurfer } from 'mdx-deck-code-surfer';
 ## v16.0
 
 * Fiber
-* Fragments (& strings) 
+* Fragments (& strings)
 * Portals
 * Error Boundary
 
@@ -41,7 +41,7 @@ import { CodeSurfer } from 'mdx-deck-code-surfer';
 <Appear>
   <h2>A new rendering engine -- that's all.</h2>
   <p>But there are some consequences.</p>
-  <p>Deprecation <i>warning</i>: componentWillReceiveOfProps, componentWillMount, componentWillUpdate</p>
+  <p>Deprecation <i>warning</i>: componentWillReceiveProps, componentWillMount, componentWillUpdate</p>
   <p>Expose new lifecycle methods: getDerivedStateFromProps (and getSnapshotBeforeUpdate)</p>
   <p><strong>Prep for async changes inter-instance lifecycle</strong></p>
 </Appear>
@@ -106,7 +106,7 @@ export default Split
     { lines: [1], notes: "In the constructor..." },
     { range: [4, 8], notes: "...we dispatch an init action."},
     { range: [11, 16], notes: "And then in componentWillUnmount, we (usually) delete the state" },
-    { notes: "Who wants to describe the problem is?" },
+    { notes: "Who wants to describe what the problem is?" },
   ]}
 />
 
@@ -131,7 +131,7 @@ export default Split
   ]}
 />
 ---
-# Takeaway 
+# Takeaway
 <Appear>
   <img src={'https://thumbs.gfycat.com/MagnificentFoolishArcticfox-size_restricted.gif'} />
   <p>Changes to lifecycle and less control inter-instance</p>
@@ -187,7 +187,7 @@ const SomeChildList = () => (
   <p>...but we need to upgrade Babel first.</p>
   <p></p>
 </Appear>
- 
+
 ---
 # Strings
 ---
@@ -292,7 +292,7 @@ getDerivedStateFromError parallels getDerivedStateFromProps -- return a state up
 </Appear>
 ---
 
-## v16.3 
+## v16.3
   * Context
   * Strict Mode
   * Packages: Lifecycle Compat, Subscriptions, ReactIs
@@ -381,7 +381,7 @@ ReactIs.typeOf(<></>) === ReactIs.Fragment; // true
 ```
 ---
 
-# v16.4 & 16.5: 
+# v16.4 & 16.5:
   * Profiler
 
 ---
@@ -394,13 +394,13 @@ ReactIs.typeOf(<></>) === ReactIs.Fragment; // true
 ---
 # v16.6
   * lazy & Suspense
-  * memo  
+  * memo
 
 ---
 
 # lazy & Suspense
 <Appear>
-  <p>Lazy allows for easily defering load & code splitting</p>
+  <p>Lazy allows for easily deferring load & code splitting</p>
   <p>Suspense allows showing a placeholder component while we wait for something to load</p>
   <img src={'https://media.giphy.com/media/l0ExgJHsbXtzitqVO/giphy.gif'} />
   <p>Essentially this is the same thing we're doing with FetchComponent</p>
