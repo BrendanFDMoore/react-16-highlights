@@ -39,11 +39,10 @@ import { CodeSurfer } from 'mdx-deck-code-surfer';
 
 <Appear>
   <h2>A new rendering engine -- that's all.</h2>
-  <h2>But there are some consequences.</h2>
-  <div style={{ display: 'block', backgroundColor:'#cccccc', width: '80%', padding: '10p'}}>
-    When replacing &lt;A /&gt; with &lt;B /&gt;, B.componentWillMount now always happens before A.componentWillUnmount. Previously, A.componentWillUnmount could fire first in some cases.
-    <br />-- React changelog
-  </div>
+  <p>But there are some consequences.</p>
+  <p>Deprecated: `componentWillReceiveOfProps`, `componentWillMount`, `componentWillUpdate`</p>
+  <p>Expose new lifecycle methods: `getDerivedStateFromProps` (and `getSnapshotBeforeUpdate`)</p>
+  
 </Appear>
 
 ```notes
@@ -56,6 +55,10 @@ It was a necessary step to _enable_ other features like lazy/Suspense and concur
 <Appear>
   <p>Imagine we re-render some component with lifecycle...</p>
   <p>Let's call the first instance A and the second B</p>
+  <p style={{ display: 'block', backgroundColor:'#cccccc', width: '80%', padding: '10p'}}>
+    When replacing &lt;A /&gt; with &lt;B /&gt;, B.componentWillMount now always happens before A.componentWillUnmount. Previously, A.componentWillUnmount could fire first in some cases.
+    <br />-- React changelog
+  </p>
 </Appear>
 
 ---
@@ -133,10 +136,10 @@ export default Split
 
 # Fragments & Strings
 <Appear>
-  <p>Get rid of messy wrapping elements in the DOM
-  </p>
+  <p>Get rid of messy wrapping elements in the DOM</p>
 </Appear>
 ---
+# Fragments
 
 export default Split
 
@@ -181,6 +184,7 @@ const SomeChildList = () => (
 </Appear>
  
 ---
+# Strings
 
 export default Split
 
@@ -197,7 +201,78 @@ const HelloThere = ({name}) => (
   `Hello, ${name}!`
 );
 ```
+---
 
+# Portals
+<Appear>
+  <p>Render somewhere else.</p>
+</Appear>
+
+---
+
+```jsx
+render() {
+  // ...
+  return (
+    <div>
+      {this.props.children}
+    </div>
+  );
+}
+```
+---
+
+```jsx
+render() {
+  // ...
+  return ReactDOM.createPortal(
+    this.props.children,
+    domNode
+  );
+}
+```
+---
+```jsx
+
+const Notifications = ({ messages }) =>
+  ReactDOM.createPortal(
+    messages.map(m => <Notification text={m}/>),
+    document.getElementById('notify-area');
+  );
+}
+...
+// in some input component
+render() {
+  <React.Fragment>
+    <InputVisualization />
+    <Notifications message={this.errorMessages} />
+  </React.Fragment>
+}
+```
+---
+
+# Error Boundary
+<Appear>
+  <p>Allows components to catch errors</p>
+  <p>Expose new lifecycle methods: `componentDidCatch` and `getDerivedStateFromError`</p>
+</Appear>
+
+```notes
+getDerivedStateFromError parallels getDerivedStateFromProps -- return a state update object.
+```
+
+---
+
+<CodeSurfer
+  code={require("!raw-loader!./code/error-boundary.js")}
+  language="javascript"
+  steps={[
+    { lines: [4], notes: "We start without an error" },
+    { range: [7, 10], notes: "if we need to update our component state." },
+    { range: [12, 15], notes: "we can also manage other externalities here." },
+    { range: [17, 21], notes: "We consume the stateful value now in the render." },
+  ]}
+/>
 ---
 
 ## v16.1 & 16.2
@@ -222,7 +297,6 @@ https://thumbs.gfycat.com/MagnificentFoolishArcticfox-size_restricted.gif
 ---
 ## v16.3 
   * Context
-  * createRef & forwardRef // remove?
   * getDerivedStateFromProps
   * Strict Mode
   * Packages: Lifecycle Compat, Subscriptions, ReactIs
