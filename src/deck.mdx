@@ -127,8 +127,77 @@ export default Split
 ---
 # Takeaway 
 <Appear>
-  <img src={'https://i.pinimg.com/originals/21/6c/4e/216c4eb9707772c378fe76ba4929bf46.gif'} />
+  <img src={'https://thumbs.gfycat.com/MagnificentFoolishArcticfox-size_restricted.gif'} />
 </Appear>
+---
+
+# Fragments & Strings
+<Appear>
+  <p>Get rid of messy wrapping elements in the DOM
+  </p>
+</Appear>
+---
+
+export default Split
+
+```jsx
+const FancyList = () => (
+  <FancyWrapper>
+    <SomeChildList />
+  </FancyWrapper>
+);
+
+const SomeChildList = () => (
+  <div>
+    <Child key="A" />
+    <Child key="B" />
+    <Child key="C" />
+  </div>
+);
+```
+
+```jsx
+const FancyList = () => (
+  <FancyWrapper>
+    <SomeChildList />
+  </FancyWrapper>
+);
+
+const SomeChildList = () => (
+  <React.Fragment>
+    <Child key="A" />
+    <Child key="B" />
+    <Child key="C" />
+  </React.Fragment>
+);
+```
+
+---
+
+ Shorthand: `<> ... </>`
+<Appear>
+  <p>...but we need to upgrade Babel first.
+  </p>
+</Appear>
+ 
+---
+
+export default Split
+
+```jsx
+const HelloThere = ({name}) => (
+  <span>
+    {`Hello, ${name}!`}
+  </span>
+);
+```
+
+```jsx
+const HelloThere = ({name}) => (
+  `Hello, ${name}!`
+);
+```
+
 ---
 
 ## v16.1 & 16.2
