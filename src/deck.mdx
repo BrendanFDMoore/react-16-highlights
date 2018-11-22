@@ -15,6 +15,7 @@ import { CodeSurfer } from 'mdx-deck-code-surfer';
 # React 16
 <Appear>
   <img src={'https://i.pinimg.com/originals/21/6c/4e/216c4eb9707772c378fe76ba4929bf46.gif'} />
+  <p></p>
 </Appear>
 
 ---
@@ -40,9 +41,9 @@ import { CodeSurfer } from 'mdx-deck-code-surfer';
 <Appear>
   <h2>A new rendering engine -- that's all.</h2>
   <p>But there are some consequences.</p>
-  <p>Deprecated: `componentWillReceiveOfProps`, `componentWillMount`, `componentWillUpdate`</p>
-  <p>Expose new lifecycle methods: `getDerivedStateFromProps` (and `getSnapshotBeforeUpdate`)</p>
-  
+  <p>Deprecation <i>warning</i>: componentWillReceiveOfProps, componentWillMount, componentWillUpdate</p>
+  <p>Expose new lifecycle methods: getDerivedStateFromProps (and getSnapshotBeforeUpdate)</p>
+  <p><strong>Prep for async changes inter-instance lifecycle</strong></p>
 </Appear>
 
 ```notes
@@ -93,6 +94,7 @@ export default Split
 
 <Appear>
   <p>I say we take a look at Table Orchestrator</p>
+  <p></p>
 </Appear>
 
 ---
@@ -113,6 +115,7 @@ export default Split
 ## The fix
 <Appear>
   <p>Well, workaround.</p>
+  <p></p>
 </Appear>
 
 ---
@@ -131,16 +134,18 @@ export default Split
 # Takeaway 
 <Appear>
   <img src={'https://thumbs.gfycat.com/MagnificentFoolishArcticfox-size_restricted.gif'} />
+  <p>Changes to lifecycle and less control inter-instance</p>
 </Appear>
 ---
 
 # Fragments & Strings
 <Appear>
   <p>Get rid of messy wrapping elements in the DOM</p>
+  <p></p>
 </Appear>
 ---
 # Fragments
-
+---
 export default Split
 
 ```jsx
@@ -151,11 +156,11 @@ const FancyList = () => (
 );
 
 const SomeChildList = () => (
-  <div>
+  <div> 👈👈👈
     <Child key="A" />
     <Child key="B" />
     <Child key="C" />
-  </div>
+  </div> 👈👈👈
 );
 ```
 
@@ -167,11 +172,11 @@ const FancyList = () => (
 );
 
 const SomeChildList = () => (
-  <React.Fragment>
+  <React.Fragment> 👈👈👈
     <Child key="A" />
     <Child key="B" />
     <Child key="C" />
-  </React.Fragment>
+  </React.Fragment> 👈👈👈
 );
 ```
 
@@ -179,26 +184,26 @@ const SomeChildList = () => (
 
  Shorthand: `<> ... </>`
 <Appear>
-  <p>...but we need to upgrade Babel first.
-  </p>
+  <p>...but we need to upgrade Babel first.</p>
+  <p></p>
 </Appear>
  
 ---
 # Strings
-
+---
 export default Split
 
 ```jsx
 const HelloThere = ({name}) => (
-  <span>
+  <span> 👈👈👈
     {`Hello, ${name}!`}
-  </span>
+  </span> 👈👈👈
 );
 ```
 
 ```jsx
 const HelloThere = ({name}) => (
-  `Hello, ${name}!`
+  `Hello, ${name}!` 👋
 );
 ```
 ---
@@ -206,6 +211,7 @@ const HelloThere = ({name}) => (
 # Portals
 <Appear>
   <p>Render somewhere else.</p>
+  <img src={'https://media.giphy.com/media/11eF6JYhWnSRa0/giphy-downsized-large.gif'} />
 </Appear>
 
 ---
@@ -241,10 +247,10 @@ const Notifications = ({ messages }) =>
   );
 }
 ...
-// in some input component
+// in some form component
 render() {
   <React.Fragment>
-    <InputVisualization />
+    <UserInputVisualization />
     <Notifications message={this.errorMessages} />
   </React.Fragment>
 }
@@ -270,50 +276,156 @@ getDerivedStateFromError parallels getDerivedStateFromProps -- return a state up
     { lines: [4], notes: "We start without an error" },
     { range: [7, 10], notes: "if we need to update our component state." },
     { range: [12, 15], notes: "we can also manage other externalities here." },
-    { range: [17, 21], notes: "We consume the stateful value now in the render." },
+    { range: [17, 21], notes: "We consume the error indication value now in the render." },
+    { notes: "And ensure the wrapped components are behaving..." },
   ]}
 />
+---
+  <img src={'https://media.giphy.com/media/3o7bu1iM5MSwG2y7NS/giphy.gif'} />
 ---
 
 ## v16.1 & 16.2
 
 <Appear>
   <h3><i>Mostly fixes and optimizations</i></h3>
-  <iframe
-    seamless="seamless"
-    style={{
-      width: '80%',
-      border: 'none',
-      maxWidth: '500px',
-      display: 'block',
-    }}
-    src="https://getyarn.io/yarn-clip/embed/e773e6ae-790a-4c10-918b-1d941cb9dee0?autoplay=false">
-  </iframe>
+  <img src={'https://y.yarn.co/e773e6ae-790a-4c10-918b-1d941cb9dee0_text_hi.gif'} />
 </Appear>
 ---
 
-https://thumbs.gfycat.com/MagnificentFoolishArcticfox-size_restricted.gif
-
----
 ## v16.3 
   * Context
-  * getDerivedStateFromProps
   * Strict Mode
   * Packages: Lifecycle Compat, Subscriptions, ReactIs
 
 ---
 
-## v16.4 & 16.5: 
-  * Profiler
+# Context
+
+Allows passing data between distant component tree nodes without prop drilling.
+You're already using it! The `redux` wrapper `Provider` does exactly this.
+
+```jsx
+const { store } = await configureStore(window.REDUX_STATE);
+// ...
+const App = () => (
+  <Wrapper className={theme.main} id="main-section">
+    <Provider store={store}> 👈👈👈
+      <InitializerContainer>
+        <Layout />
+      </InitializerContainer>
+    </Provider>
+  </Wrapper>
+);
+```
+---
+
+TODO: Add CodeSurfer look at ContextDemo first??
+---
+import ContextDemo from './components/ContextDemo'
+
+<ContextDemo />
 
 ---
 
-## v16.6
+# Strict Mode
+
+Tool for validating compatibility with new API
+No visual elements, just extra checks
+
+```jsx
+import React from 'react';
+
+function ExampleApplication() {
+  return (
+    <div>
+      <Header />
+      <React.StrictMode> 👈👈👈
+        <div>
+          <ComponentOne />
+          <ComponentTwo />
+        </div>
+      </React.StrictMode>
+      <Footer />
+    </div>
+  );
+}
+```
+---
+
+# Lifecycle Compat
+<Appear>
+  <p>Enable code running older React to target new lifecycle methods (eg, 15)</p>
+  <p>Primarily targetted at library developers, avoid major version bumps</p>
+</Appear>
+
+---
+
+# ReactIs (TODO: maybe remove this?)
+<Appear>
+  <p>First-party tooling for comparing element types</p>
+  <p></p>
+</Appear>
+
+---
+
+```jsx
+import React from "react";
+import * as ReactIs from 'react-is';
+
+ReactIs.isElement(<div />); // true
+ReactIs.typeOf(<div />) === ReactIs.Element; // true
+
+ReactIs.isFragment(<></>); // true
+ReactIs.typeOf(<></>) === ReactIs.Fragment; // true
+
+```
+---
+
+# v16.4 & 16.5: 
+  * Profiler
+
+---
+# Profiler
+<Appear>
+  <p>Support for visualizing concurrent rendering</p>
+  <p>Now built into React DevTools</p>
+  <img src={'https://reactjs.org/filtering-commits-683b9d860ef722e1505e5e629df7ef7e.gif'} />
+</Appear>
+---
+# v16.6
   * lazy & Suspense
   * memo  
 
 ---
 
+# lazy & Suspense
+<Appear>
+  <p>Lazy allows for easily defering load & code splitting</p>
+  <p>Suspense allows showing a placeholder component while we wait for something to load</p>
+  <img src={'https://media.giphy.com/media/l0ExgJHsbXtzitqVO/giphy.gif'} />
+  <p>Essentially this is the same thing we're doing with FetchComponent</p>
+</Appear>
+
+---
+import LazyDemo from './components/LazyDemo'
+
+<LazyDemo />
+
+---
+# Memo
+
+<Appear>
+  <p>Enables Stateless Functional Cmponents to be memoized on props</p>
+  <p>Works like PureComponent, but for SFCs</p>
+</Appear>
+
+---
+
+import MemoDemo from './components/MemoDemo'
+
+<MemoDemo />
+
+---
 # We Can See The Future!
 
 * 16.7 (alpha)
@@ -323,14 +435,9 @@ https://thumbs.gfycat.com/MagnificentFoolishArcticfox-size_restricted.gif
   * Scheduler
   * Cache
 
-
 ---
-```jsx
-<CodeSnippet />
-```
----
-import Demo from './components/Demo'
-
-<Demo />
----
-# The end
+# Questions?
+<Appear>
+  <p>Bueller?</p>
+  <img src={'https://media.giphy.com/media/yODVOeMxWBwBO/giphy.gif'} />
+</Appear>
