@@ -1,8 +1,7 @@
 import React from 'react';
 
-const Spinner = () => (
-  // <img src={'./spinner.gif'} />
-  <span>Fake spinner</span>
+const Loader = () => (
+  <img className="loader-spinner" src={require("file-loader!./loader.gif")} alt="Loading"/>
 );
 
-export default Spinner;
+export default Loader;
