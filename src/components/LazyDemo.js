@@ -1,6 +1,5 @@
 import React, { lazy, Suspense } from 'react';
 import Loader from './Loader';
-// const Sloth = lazy(() => import('./SlothLoader'));
 const Sloth = lazy(() => import('./Sloth'));
 
 class LazyDemo extends React.Component {
@@ -16,9 +15,10 @@ class LazyDemo extends React.Component {
     const { show } = this.state;
     return (
       <div>
-        <button onClick={this.toggleShow} type='button'>{show ? 'Hide' : 'Show'}</button>
+        <button onClick={this.toggleShow} type='button'>{show ? 'Hide Sloth' : 'Show Sloth'}</button>
+        <br />
         <Suspense fallback={<Loader />}>
-          { show ? <Sloth /> : <span>No sloth :(</span>}
+          { show ? <Sloth /> : <span>No sloth 😢</span>}
         </Suspense>
       </div>
     )
