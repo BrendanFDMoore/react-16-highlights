@@ -1,8 +1,11 @@
 import React, { lazy } from 'react';
 
-const timeout = ms => new Promise(res => setTimeout(res, ms));
-
 const Sloth = () => {
+  console.log('Sloth lag start');
+  let sum = 0;
+  const max = 2000000000;
+  for (let i=0; i<max;i++) {sum+= i*i}
+  console.log('Sloth lag end:', sum);
   return (
     <div>
       <h3>Sloth!</h3>
@@ -11,13 +14,4 @@ const Sloth = () => {
   );
 }
 
-const LazySloth = () => {
-  const LazySloth = lazy(async () => {
-    await timeout(3000);
-    return ({default: () => (<Sloth />)})
-  });
-
-  return (<LazySloth />);
-}
-
-export default LazySloth;
+export default Sloth;
