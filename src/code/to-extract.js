@@ -9,7 +9,10 @@ constructor(props) {
 }
          
 componentWillUnmount() {
-  const { dispatchDeleteAction, shouldPersist } = this.props;
+  const {
+    dispatchDeleteAction,
+    shouldPersist
+  } = this.props;
   if (!shouldPersist) {
     dispatchDeleteAction();
   }
