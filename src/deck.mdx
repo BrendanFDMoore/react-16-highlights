@@ -17,11 +17,11 @@ import { CodeSurfer } from 'mdx-deck-code-surfer';
 # React 16
 <Appear>
   <img src={'https://i.pinimg.com/originals/21/6c/4e/216c4eb9707772c378fe76ba4929bf46.gif'} />
-  <p></p>
+  <p>Brendan Moore, Solution Architect at Rangle</p>
 </Appear>
 
 ---
-# Highlights
+# Highlights, up to 16.6
 
 <Appear>
   <h3>Not everything</h3>
@@ -29,23 +29,13 @@ import { CodeSurfer } from 'mdx-deck-code-surfer';
 </Appear>
 
 ---
-## v16.0
-
-* Fiber
-* Fragments (& strings)
-* Portals
-* Error Boundary
-
----
-
 # What is Fiber?
 
 <Appear>
   <h2>A new rendering engine -- that's all.</h2>
+  <p><strong>Lays groundwork for async rendering</strong></p>
   <p>But there are some consequences.</p>
-  <p>Deprecation <i>warning</i>: componentWillReceiveProps, componentWillMount, componentWillUpdate</p>
-  <p>Expose new lifecycle methods: getDerivedStateFromProps (and getSnapshotBeforeUpdate)</p>
-  <p><strong>Prep for async changes inter-instance lifecycle</strong></p>
+  <p>Deprecation <i>warning</i> for: componentWillReceiveProps, componentWillMount, componentWillUpdate</p>
 </Appear>
 
 ```notes
@@ -58,10 +48,6 @@ It was a necessary step to _enable_ other features like lazy/Suspense and concur
 <Appear>
   <p>Imagine we re-render some component with lifecycle...</p>
   <p>Let's call the first instance A and the second B</p>
-  <p style={{ display: 'block', backgroundColor:'#cccccc', width: '80%', padding: '10p'}}>
-    When replacing &lt;A /&gt; with &lt;B /&gt;, B.componentWillMount now always happens before A.componentWillUnmount. Previously, A.componentWillUnmount could fire first in some cases.
-    <br />-- React changelog
-  </p>
 </Appear>
 
 ---
@@ -91,6 +77,10 @@ export default Split
 </Appear>
 
 ---
+>When replacing `<A />` with `<B />`, `B.componentWillMount` now always happens before `A.componentWillUnmount`. Previously, `A.componentWillUnmount` could fire first in some cases.
+
+_--React changelog_
+---
 
 ## So what?
 
@@ -107,7 +97,7 @@ export default Split
   steps={[
     { lines: [1], notes: "In the constructor..." },
     { range: [4, 8], notes: "...we dispatch an init action."},
-    { range: [11, 16], notes: "And then in componentWillUnmount, we (usually) delete the state" },
+    { range: [11, 19], notes: "And then in componentWillUnmount, we (usually) delete the state" },
     { notes: "Who wants to describe what the problem is?" },
   ]}
 />
@@ -127,19 +117,83 @@ export default Split
   language="javascript"
   steps={[
     { lines: [5, 7], notes: "Assign a UUID to the instance..." },
-    { lines: [22, 26], notes: "...and track the latest initialized instance." },
-    { lines: [17], notes: "Then, when we unmount, the delete carries the instance too" },
-    { range: [31, 33], notes: "and we check the id before clearing the state." },
+    { lines: [26, 27, 39], notes: "...and track the latest initialized instance." },
+    { lines: [21], notes: "Then, when we unmount, the delete carries the instance too" },
+    { ranges: [[46, 46], [51, 54]], notes: "and we check the id before clearing the state." },
   ]}
 />
 ---
 # Takeaway
 <Appear>
   <img src={'https://thumbs.gfycat.com/MagnificentFoolishArcticfox-size_restricted.gif'} />
-  <p>Changes to lifecycle and less control inter-instance</p>
+  <p>Changes to lifecycle methods and less control inter-instance</p>
+</Appear>
+---
+# Strict Mode
+
+Tool for validating compatibility with new API
+No visual elements, just extra checks
+---
+```jsx
+function ExampleApplication() {
+  return (
+    <div>
+      <Header />
+      <React.StrictMode> 👈👈👈
+        <div>
+          <ComponentOne />
+          <ComponentTwo />
+        </div>
+      </React.StrictMode> 👈👈👈
+      <Footer />
+    </div>
+  );
+}
+```
+---
+# There are new lifecycle methods too!
+
+* `getDerivedStateFromProps`
+* `getSnapshotBeforeUpdate`
+
+---
+# Lifecycle Compat
+<Appear>
+  <p>Enable code running older React (14.9+) to target new lifecycle methods</p>
+  <p>Primarily targetted at library developers, avoid major version bumps</p>
 </Appear>
 ---
 
+# Error Boundary
+
+<Appear>
+  <p>Allows components to catch errors</p>
+  <p>Powered by other new lifecycle methods: componentDidCatch and getDerivedStateFromError</p>
+  <p>(Not currently supported by the lifecycle compat)</p>
+</Appear>
+
+```notes
+getDerivedStateFromError parallels getDerivedStateFromProps -- return a state update object.
+```
+
+---
+TODO: Error Boundary demo>?
+---
+
+<CodeSurfer
+  code={require("!raw-loader!./code/error-boundary.js")}
+  language="javascript"
+  steps={[
+    { lines: [4], notes: "We start without an error" },
+    { range: [7, 11], notes: "We can then update our component state." },
+    { range: [12, 17], notes: "or manage other externalities." },
+    { range: [19, 25], notes: "We consume the error indication value now in the render." },
+    { notes: "And ensure the wrapped components are behaving..." },
+  ]}
+/>
+---
+  <img src={'https://media.giphy.com/media/3o7bu1iM5MSwG2y7NS/giphy.gif'} />
+---
 # Fragments & Strings
 <Appear>
   <p>Get rid of messy wrapping elements in the DOM</p>
@@ -259,33 +313,6 @@ render() {
 ```
 ---
 
-# Error Boundary
-<Appear>
-  <p>Allows components to catch errors</p>
-  <p>Expose new lifecycle methods: `componentDidCatch` and `getDerivedStateFromError`</p>
-</Appear>
-
-```notes
-getDerivedStateFromError parallels getDerivedStateFromProps -- return a state update object.
-```
-
----
-
-<CodeSurfer
-  code={require("!raw-loader!./code/error-boundary.js")}
-  language="javascript"
-  steps={[
-    { lines: [4], notes: "We start without an error" },
-    { range: [7, 10], notes: "if we need to update our component state." },
-    { range: [12, 15], notes: "we can also manage other externalities here." },
-    { range: [17, 21], notes: "We consume the error indication value now in the render." },
-    { notes: "And ensure the wrapped components are behaving..." },
-  ]}
-/>
----
-  <img src={'https://media.giphy.com/media/3o7bu1iM5MSwG2y7NS/giphy.gif'} />
----
-
 ## v16.1 & 16.2
 
 <Appear>
@@ -294,18 +321,11 @@ getDerivedStateFromError parallels getDerivedStateFromProps -- return a state up
 </Appear>
 ---
 
-## v16.3
-  * Context
-  * Strict Mode
-  * Packages: Lifecycle Compat, Subscriptions, ReactIs
-
----
-
 # Context
 
 Allows passing data between distant component tree nodes without prop drilling.
 You're already using it! The `redux` wrapper `Provider` does exactly this.
-
+---
 ```jsx
 const { store } = await configureStore(window.REDUX_STATE);
 // ...
@@ -320,7 +340,6 @@ const App = () => (
 );
 ```
 ---
-
 TODO: Add CodeSurfer look at ContextDemo first??
 ---
 import ContextDemo from './components/ContextDemo'
@@ -328,40 +347,46 @@ import ContextDemo from './components/ContextDemo'
 <ContextDemo />
 
 ---
-
-# Strict Mode
-
-Tool for validating compatibility with new API
-No visual elements, just extra checks
-
-```jsx
-import React from 'react';
-
-function ExampleApplication() {
-  return (
-    <div>
-      <Header />
-      <React.StrictMode> 👈👈👈
-        <div>
-          <ComponentOne />
-          <ComponentTwo />
-        </div>
-      </React.StrictMode>
-      <Footer />
-    </div>
-  );
-}
-```
+# lazy & Suspense
+<Appear>
+  <p>Lazy allows for easily deferring load & code splitting</p>
+  <p>Suspense allows showing a placeholder component while we wait for something to load</p>
+  <img src={'https://media.giphy.com/media/l0ExgJHsbXtzitqVO/giphy.gif'} />
+  <p>Essentially this is the same thing we're doing with FetchComponent</p>
+</Appear>
 ---
 
-# Lifecycle Compat
+TODO: Show Sloth code?
+
+---
+import LazyDemo from './components/LazyDemo'
+
+<LazyDemo />
+
+---
+# Memo
+
 <Appear>
-  <p>Enable code running older React to target new lifecycle methods (eg, 15)</p>
-  <p>Primarily targetted at library developers, avoid major version bumps</p>
+  <p>Enables Stateless Functional Components (SFC) to be memoized</p>
+  <p>Works like PureComponent, but for SFCs</p>
 </Appear>
 
 ---
+TODO: Show memo code?
+---
 
+import MemoDemo from './components/MemoDemo'
+
+<MemoDemo />
+
+---
+# Profiler
+<Appear>
+  <p>Support for visualizing concurrent rendering</p>
+  <p>Now built into React DevTools</p>
+  <img src={'https://reactjs.org/filtering-commits-683b9d860ef722e1505e5e629df7ef7e.gif'} />
+</Appear>
+---
 # ReactIs (TODO: maybe remove this?)
 <Appear>
   <p>First-party tooling for comparing element types</p>
@@ -382,52 +407,6 @@ ReactIs.typeOf(<></>) === ReactIs.Fragment; // true
 
 ```
 ---
-
-# v16.4 & 16.5:
-  * Profiler
-
----
-# Profiler
-<Appear>
-  <p>Support for visualizing concurrent rendering</p>
-  <p>Now built into React DevTools</p>
-  <img src={'https://reactjs.org/filtering-commits-683b9d860ef722e1505e5e629df7ef7e.gif'} />
-</Appear>
----
-# v16.6
-  * lazy & Suspense
-  * memo
-
----
-
-# lazy & Suspense
-<Appear>
-  <p>Lazy allows for easily deferring load & code splitting</p>
-  <p>Suspense allows showing a placeholder component while we wait for something to load</p>
-  <img src={'https://media.giphy.com/media/l0ExgJHsbXtzitqVO/giphy.gif'} />
-  <p>Essentially this is the same thing we're doing with FetchComponent</p>
-</Appear>
-
----
-import LazyDemo from './components/LazyDemo'
-
-<LazyDemo />
-
----
-# Memo
-
-<Appear>
-  <p>Enables Stateless Functional Cmponents to be memoized on props</p>
-  <p>Works like PureComponent, but for SFCs</p>
-</Appear>
-
----
-
-import MemoDemo from './components/MemoDemo'
-
-<MemoDemo />
-
----
 # We Can See The Future!
 
 * 16.7 (alpha)
@@ -440,6 +419,6 @@ import MemoDemo from './components/MemoDemo'
 ---
 # Questions?
 <Appear>
-  <p>Bueller?</p>
   <img src={'https://media.giphy.com/media/yODVOeMxWBwBO/giphy.gif'} />
+  <p>Thanks!</p>
 </Appear>

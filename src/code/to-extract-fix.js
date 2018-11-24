@@ -12,23 +12,44 @@ constructor(props) {
 }
 
 componentWillUnmount() {
-  const { dispatchDeleteAction, shouldPersist } = this.props;
+  const {
+    dispatchDeleteAction,
+    shouldPersist
+  } = this.props;
   if (!shouldPersist) {
-    dispatchDeleteAction({ instanceId: this.instanceId });
+    dispatchDeleteAction({
+      instanceId: this.instanceId,
+    });
   }
 }
 
 // Reducer
-function onInit(state: State, { payload: { facetMeta } }) {
-  const { instanceId, tableId, sort, filter, hydrated } = facetMeta;
+function onInit(
+  state: State,
+  { payload: { facetMeta } }
+) {
+  const {
+    tableId,
+    instanceId, sort, filter, hydrated,
+  } = facetMeta;
   return {
     ...state,
-    [tableId]: { ...initFacetState, **instanceId**, sort, filter, hydrated, initialized: true },
+    [tableId]: {
+      ...initFacetState,
+      instanceId,
+      sort, filter,
+      hydrated,
+      initialized: true
+    },
   };
 }
-function onDelete(state: State, { payload: { facetMeta } }) {
+function onDelete(
+  state: State,
+  { payload: { facetMeta } }
+) {
   const { tableId, instanceId } = facetMeta;
-  return state[tableId] && state[tableId].instanceId === instanceId
+  return state[tableId] 
+    && state[tableId].instanceId === instanceId
     ? _.omit(state, tableId)
     : state;
 }
