@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Loader = () => (
-  <img className="loader-spinner" src={require("file-loader!./loader.gif")} alt="Loading"/>
+  <img src={require("file-loader!../images/loader.gif")} alt="Loading"/>
 );
 
 export default Loader;
