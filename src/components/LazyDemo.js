@@ -29,7 +29,7 @@ class LazyDemo extends React.Component {
         <br />
         <button onClick={this.toggleShow} type='button'>{show ? 'Hide Sloth' : 'Show Sloth'}</button>
         <br />
-        <Suspense fallback={<Loader />} >
+        <Suspense fallback={<Loader />} maxDuration={1} >
         {
           show 
           ? ( lazy ? <LazySloth /> : <Sloth />)

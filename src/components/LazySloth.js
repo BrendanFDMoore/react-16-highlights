@@ -5,7 +5,7 @@ const timeout = ms => new Promise(res => setTimeout(res, ms));
 
 const LazySloth = () => {
   const LazySloth = lazy(async () => {
-    await timeout(500);
+    await timeout(100);
     return ({default: () => (<Sloth />)})
   });
 

@@ -151,6 +151,8 @@ function ExampleApplication() {
 }
 ```
 ---
+<img width='100%' src={require("file-loader!./images/strictmode.png")} alt="Strict mode errors"/>
+---
 # There are new lifecycle methods too!
 
 * `getDerivedStateFromProps`
@@ -307,7 +309,7 @@ const Notifications = ({ messages }) =>
 render() {
   <React.Fragment>
     <UserInputVisualization />
-    <Notifications message={this.errorMessages} />
+    <Notifications messages={this.errorMessages} />
   </React.Fragment>
 }
 ```
