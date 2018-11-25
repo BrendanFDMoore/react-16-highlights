@@ -7,7 +7,14 @@ import { CodeSurfer } from 'mdx-deck-code-surfer';
 <Head>
   <title>React 16 Highlights</title>
 </Head>
-
+<div
+  id='notification-area'
+  style={{
+    position:'fixed',
+    top: 0,
+  }}>
+  Notification area!
+</div>
 
 # React 16
 <Appear>
@@ -26,6 +33,7 @@ import { CodeSurfer } from 'mdx-deck-code-surfer';
 
 <Appear>
   <h2>A new rendering engine -- that's all.</h2>
+  <img src={'https://y.yarn.co/e773e6ae-790a-4c10-918b-1d941cb9dee0_text_hi.gif'} />
   <p><strong>Lays groundwork for async rendering</strong></p>
   <p>But there are some consequences.</p>
   <p>Deprecation <i>warning</i> for: componentWillReceiveProps, componentWillMount, componentWillUpdate</p>
@@ -284,29 +292,25 @@ const Notifications = ({ messages }) =>
 ...
 // in some form component
 render() {
-  <React.Fragment>
+  <>
     <UserInputVisualization />
     <Notifications messages={this.errorMessages} />
-  </React.Fragment>
+  </>
 }
 ```
 ---
-TODO: Portal Demo
----
-## v16.1 & 16.2
+# Portal Demo
+import PortalDemo from './components/PortalDemo';
 
-<Appear>
-  <h3><i>Mostly fixes and optimizations</i></h3>
-  <img src={'https://y.yarn.co/e773e6ae-790a-4c10-918b-1d941cb9dee0_text_hi.gif'} />
-</Appear>
+<PortalDemo />
 ---
 # Context
 
 Allows passing data between distant component tree nodes without prop drilling.
-You're already using it! The `redux` wrapper `Provider` does exactly this.
+You're already using it! The `react-redux` wrapper `Provider` does exactly this.
 ---
 ```jsx
-const { store } = await configureStore(window.REDUX_STATE);
+const { store } = await configureStore();
 // ...
 const App = () => (
   <Wrapper className={theme.main} id="main-section">
@@ -317,6 +321,20 @@ const App = () => (
     </Provider>
   </Wrapper>
 );
+```
+---
+```jsx
+import { ReactReduxContext } from './Context'
+// ...
+render() {
+  const ContextToUse = this.props.context || ReactReduxContext;
+
+  return (
+    <ContextToUse.Consumer>
+      {this.renderWrappedComponent}
+    </ContextToUse.Consumer>
+  )
+}
 ```
 ---
 <CodeSurfer
