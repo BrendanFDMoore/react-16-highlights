@@ -6,11 +6,6 @@ import { CodeSurfer } from 'mdx-deck-code-surfer';
 
 <Head>
   <title>React 16 Highlights</title>
-  {/* <meta name='twitter:card' content='summary_large_image' />
-  <meta name='twitter:site' content='@jxnblk' />
-  <meta name='twitter:title' content='My Presentation' />
-  <meta name='twitter:description' content='A really great presentation' />
-  <meta name='twitter:image' content='https://example.com/card.png' /> */}
 </Head>
 
 
@@ -140,10 +135,11 @@ function ExampleApplication() {
 ---
 <img width='100%' src={require("file-loader!./images/strictmode.png")} alt="Strict mode errors"/>
 ---
-# There are new lifecycle methods too!
+## There are new lifecycle methods too!
 
-* `getDerivedStateFromProps`
-* `getSnapshotBeforeUpdate`
+* `getDerivedStateFromProps` for tracking prop changes over time (compare to cWRP)
+* `getSnapshotBeforeUpdate` for tracking state from DOM (compare to cWU)
+
 ---
 # Lifecycle Compat
 <Appear>
@@ -156,14 +152,13 @@ function ExampleApplication() {
 <Appear>
   <p>Allows components to catch errors</p>
   <p>Powered by other new lifecycle methods: componentDidCatch and getDerivedStateFromError</p>
-  <p>(Not currently supported by the lifecycle compat)</p>
+  <p>(Not supported by lifecycle compat)</p>
+  <p>Important caveat: only errors during render & other lifecycle, NOT events</p>
 </Appear>
 
 ```notes
 getDerivedStateFromError parallels getDerivedStateFromProps -- return a state update object.
 ```
----
-TODO: Error Boundary demo>?
 ---
 <CodeSurfer
   code={require("!raw-loader!./code/error-boundary.js")}
@@ -178,6 +173,11 @@ TODO: Error Boundary demo>?
 />
 ---
 <img src={'https://media.giphy.com/media/3o7bu1iM5MSwG2y7NS/giphy.gif'} />
+---
+# Error Boundary Demo
+import ErrorBoundaryDemo from './components/ErrorBoundaryDemo'
+
+<ErrorBoundaryDemo />
 ---
 # Fragments & Strings
 <Appear>
@@ -290,6 +290,8 @@ render() {
   </React.Fragment>
 }
 ```
+---
+TODO: Portal Demo
 ---
 ## v16.1 & 16.2
 
