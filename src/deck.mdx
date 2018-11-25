@@ -344,43 +344,65 @@ const App = () => (
 ---
 TODO: Add CodeSurfer look at ContextDemo first??
 ---
+# Context Demo
 import ContextDemo from './components/ContextDemo'
 
 <ContextDemo />
-
 ---
 # lazy & Suspense
 <Appear>
   <p>Lazy allows for easily deferring load & code splitting</p>
   <p>Suspense allows showing a placeholder component while we wait for something to load</p>
-  <img src={'https://media.giphy.com/media/l0ExgJHsbXtzitqVO/giphy.gif'} />
   <p>Essentially this is the same thing we're doing with FetchComponent</p>
+  <img src={'https://thumbs.gfycat.com/SorrowfulAbandonedArcticfox-size_restricted.gif'} />
 </Appear>
 ---
-
-TODO: Show Sloth code?
-
+<CodeSurfer
+  code={require("!raw-loader!./components/Sloth.js")}
+  language="javascript"
+  steps={[
+    { lines: [3], notes: "This is sloth. He's kind of slow." },
+    { range: [5, 9], notes: "...but I made him that way." },
+  ]}
+/>
 ---
+<CodeSurfer
+  code={require("!raw-loader!./components/LazyDemo.js")}
+  language="javascript"
+  steps={[
+    { lines: [3, 4], notes: "Load Sloth normally and a lazy version" },
+    { range: [36, 42], notes: "and wrap in Suspense" },
+  ]}
+/>
+---
+# Lazy Demo
 import LazyDemo from './components/LazyDemo'
 
 <LazyDemo />
-
 ---
 # Memo
 
 <Appear>
   <p>Enables Stateless Functional Components (SFC) to be memoized</p>
   <p>Works like PureComponent, but for SFCs</p>
+  <p>If we do the same thing over and over, at least it'll be fast... </p>
+  <img src={'https://media.giphy.com/media/f6ek1KcvTWPmw/giphy.gif'} />
 </Appear>
-
 ---
-TODO: Show memo code?
+<CodeSurfer
+  code={require("!raw-loader!./components/MemoDemo.js")}
+  language="javascript"
+  steps={[
+    { range: [3, 14], notes: "Here we have a slow component a single prop" },
+    { lines: [16], notes: "and a version using memo" },
+    { range: [71, 73], notes: "then we render the selected version" },
+  ]}
+/>
 ---
-
+# Memo Demo
 import MemoDemo from './components/MemoDemo'
 
 <MemoDemo />
-
 ---
 # Profiler
 <Appear>
@@ -389,7 +411,7 @@ import MemoDemo from './components/MemoDemo'
   <img src={'https://reactjs.org/filtering-commits-683b9d860ef722e1505e5e629df7ef7e.gif'} />
 </Appear>
 ---
-# ReactIs (TODO: maybe remove this?)
+# ReactIs
 <Appear>
   <p>First-party tooling for comparing element types</p>
   <p></p>
@@ -414,6 +436,7 @@ ReactIs.typeOf(<></>) === ReactIs.Fragment; // true
 * 16.7 (alpha)
   * Concurrent (née _async_) rendering
   * Hooks
+---
 * ...and beyond
   * Scheduler
   * Cache
