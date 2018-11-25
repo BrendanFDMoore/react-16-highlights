@@ -16,21 +16,25 @@ const LanguageConsumer = LanguageContext.Consumer;
 // with any of the components down the wrapping point.
 
 class LanguageProviderComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { language: 'sp', };
-        this.updateLanguage = this.updateLanguage.bind(this);
-    }
+  constructor(props) {
+    super(props);
+    this.state = { language: 'sp', };
+    this.updateLanguage = this.updateLanguage.bind(this);
+  }
 
-    updateLanguage = (event) => this.setState({ language: event.target.value });
+  updateLanguage = (event) =>
+    this.setState({ language: event.target.value });
 
-    render() {
-        return(
-            <LanguageProvider value={{ language: this.state.language, updateLanguage: this.updateLanguage }}>
-                {this.props.children}
-            </LanguageProvider>
-        )
-    }
+  render() {
+    return(
+      <LanguageProvider value={{
+        language: this.state.language,
+        updateLanguage: this.updateLanguage
+      }}>
+        {this.props.children}
+      </LanguageProvider>
+    )
+  }
  }
 
 // Now by wrapping the App with the provider we can make the language value and the updateLanguage method available
@@ -40,27 +44,27 @@ class LanguageProviderComponent extends React.Component {
 // The consumer is subscribed to any changes in the provider.
 // The consumer requires a function as a child in order to process the value(s) shared by the provider and returns a react node.
 
-const TranslatableContent = (props) => (
-    <LanguageConsumer>
-        {({ language }) => props.dictionary[language]}
-    </LanguageConsumer>
+const TranslatableContent = ({ dictionary }) => (
+  <LanguageConsumer>
+    {({ language }) => dictionary[language]}
+  </LanguageConsumer>
 );
 
 // Now let’s use the method shared by the provider in order to trigger the language switch.
 // We will create a Header component. Notice again that the consumer uses a function-as-a-child to render a React Node.
 
 const Header = () => (
-    <LanguageConsumer>
-        {({ updateLanguage }) => (
-            <header> Switch Language to:
-                <select onChange={updateLanguage}>
-                    <option value='sp'>Spanish</option>
-                    <option value='fr'>French</option>
-                    <option value='en'>English</option>
-                </select>
-            </header>
-        )}
-    </LanguageConsumer>
+  <LanguageConsumer>
+    {({ updateLanguage }) => (
+      <header> Switch Language to:
+        <select onChange={updateLanguage}>
+          <option value='sp'>Spanish</option>
+          <option value='fr'>French</option>
+          <option value='en'>English</option>
+        </select>
+      </header>
+    )}
+  </LanguageConsumer>
 )
 
 // We are almost done, so far we have the provider component that holds and handles the state for the language selection.
@@ -70,15 +74,19 @@ const Header = () => (
 // Let's put together the App component.
 
 class App extends React.Component {
-    render() {
-        return (
-            <LanguageProviderComponent>
-                <Header />
-                <TranslatableContent
-                    dictionary={{fr: 'Bonjour Charles!', en: 'Good Morning Charles!', sp: 'Buenos Dias Carlos!'}} />
-            </LanguageProviderComponent>
-        );
-    }
+  render() {
+    return (
+      <LanguageProviderComponent>
+        <Header />
+        <TranslatableContent
+          dictionary={{
+            fr: 'Bonjour Charles!',
+            en: 'Good Morning Charles!',
+            sp: 'Buenos Dias Carlos!'}}
+        />
+      </LanguageProviderComponent>
+    );
+  }
 }
 
 export default App;

@@ -319,7 +319,18 @@ const App = () => (
 );
 ```
 ---
-TODO: Add CodeSurfer look at ContextDemo first??
+<CodeSurfer
+  code={require("!raw-loader!./code/context.js")}
+  language="javascript"
+  steps={[
+    { range: [3, 5], notes: "First, we create our context." },
+    { range: [7, 17], notes: "We construct a component with state and an updater" },
+    { range: [21, 26], notes: "which implements the raw provider." },
+    { range: [31, 35], notes: "Use the consumer to get the current language value," },
+    { range: [38, 48], notes: "but also to get the language updater." },
+    { range: [54, 62], notes: "Put it all together with otherwise unconnected siblings." },
+  ]}
+/>
 ---
 # Context Demo
 import ContextDemo from './components/ContextDemo'
