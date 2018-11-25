@@ -1,18 +1,19 @@
 import React, { memo } from 'react';
 
-const SomeSlowComponent = ({ max }) => {
+const SlowComponent = ({ max }) => {
   console.log('SomeSlowComponent rendering for:', max)
   const nums = [];
   for (let i=0;i<max; i++) {
     nums.push(i);
   }
   const sum = nums.reduce((sum, val) => sum=sum+val, 0);
+
   return (
     `Sum of first ${max} integers: ${sum}`
   );
 };
 
-const MemoSlowComponent = memo(SomeSlowComponent);
+const MemoSlowComponent = memo(SlowComponent);
 
 class MemoDemo extends React.Component {
   constructor(props) {
@@ -35,25 +36,41 @@ class MemoDemo extends React.Component {
   incrementZeros(by) {
     this.setState({ zeros: this.state.zeros + by })
   }
+
   render() {
     const { count, memo, zeros } = this.state;
     const max = Math.pow(10, zeros);
     return (
       <div>
-        <button onClick={this.toggleMemo} type='button'>{memo ? 'Turn off Memo' : 'Turn on Memo'}</button>
+        <button onClick={this.toggleMemo} type='button'>
+          {memo ? 'Memo is ON. Turn off Memo' : 'Memo is OFF. Turn on Memo'}
+        </button>
         <br />
-        <button onClick={() => this.incrementCount(1)} type='button'>+1</button>
+        <br />
         <span>{`Count: ${count}`}</span>
-        <button onClick={() => this.incrementCount(-1)} type='button'>-1</button>
         <br />
-        <button onClick={() => this.incrementZeros(1)} type='button'>x10</button>
+        <button onClick={() => this.incrementCount(-1)} type='button'>
+          -1
+        </button>
+        <button onClick={() => this.incrementCount(1)} type='button'>
+          +1
+        </button>
+        <br />
+        <br />
         <span>{`Sum up to: ${max}`}</span>
-        <button onClick={() => this.incrementZeros(-1)} type='button'>/10</button>
+        <br />
+        <button onClick={() => this.incrementZeros(-1)} type='button'>
+          /10
+        </button>
+        <button onClick={() => this.incrementZeros(1)} type='button'>
+          x10
+        </button>
+        <br />
         <br />
         {
           memo
           ? <MemoSlowComponent max={max} />
-          : <SomeSlowComponent max={max} />
+          : <SlowComponent max={max} />
         }
       </div>
     )

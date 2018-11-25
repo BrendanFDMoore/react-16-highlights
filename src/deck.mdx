@@ -6,11 +6,6 @@ import { CodeSurfer } from 'mdx-deck-code-surfer';
 
 <Head>
   <title>React 16 Highlights</title>
-  {/* <meta name='twitter:card' content='summary_large_image' />
-  <meta name='twitter:site' content='@jxnblk' />
-  <meta name='twitter:title' content='My Presentation' />
-  <meta name='twitter:description' content='A really great presentation' />
-  <meta name='twitter:image' content='https://example.com/card.png' /> */}
 </Head>
 
 
@@ -19,7 +14,6 @@ import { CodeSurfer } from 'mdx-deck-code-surfer';
   <img src={'https://i.pinimg.com/originals/21/6c/4e/216c4eb9707772c378fe76ba4929bf46.gif'} />
   <p>Brendan Moore, Solution Architect at Rangle</p>
 </Appear>
-
 ---
 # Highlights, up to 16.6
 
@@ -27,7 +21,6 @@ import { CodeSurfer } from 'mdx-deck-code-surfer';
   <h3>Not everything</h3>
   <h4>Lots of resources online to learn more -- start with the React changelog and blog</h4>
 </Appear>
-
 ---
 # What is Fiber?
 
@@ -49,9 +42,7 @@ It was a necessary step to _enable_ other features like lazy/Suspense and concur
   <p>Imagine we re-render some component with lifecycle...</p>
   <p>Let's call the first instance A and the second B</p>
 </Appear>
-
 ---
-
 export default Split
 
 <Appear>
@@ -75,22 +66,17 @@ export default Split
     <li style={{listStyleType:'none'}}>Unmount A</li>
   </ul>
 </Appear>
-
 ---
 >When replacing `<A />` with `<B />`, `B.componentWillMount` now always happens before `A.componentWillUnmount`. Previously, `A.componentWillUnmount` could fire first in some cases.
 
 _--React changelog_
 ---
-
 ## So what?
-
 <Appear>
   <p>I say we take a look at Table Orchestrator</p>
   <p></p>
 </Appear>
-
 ---
-
 <CodeSurfer
   code={require("!raw-loader!./code/to-extract.js")}
   language="javascript"
@@ -101,17 +87,13 @@ _--React changelog_
     { notes: "Who wants to describe what the problem is?" },
   ]}
 />
-
 ---
-
 ## The fix
 <Appear>
   <p>Well, workaround.</p>
   <p></p>
 </Appear>
-
 ---
-
 <CodeSurfer
   code={require("!raw-loader!./code/to-extract-fix.js")}
   language="javascript"
@@ -153,10 +135,10 @@ function ExampleApplication() {
 ---
 <img width='100%' src={require("file-loader!./images/strictmode.png")} alt="Strict mode errors"/>
 ---
-# There are new lifecycle methods too!
+## There are new lifecycle methods too!
 
-* `getDerivedStateFromProps`
-* `getSnapshotBeforeUpdate`
+* `getDerivedStateFromProps` for tracking prop changes over time (compare to cWRP)
+* `getSnapshotBeforeUpdate` for tracking state from DOM (compare to cWU)
 
 ---
 # Lifecycle Compat
@@ -165,23 +147,19 @@ function ExampleApplication() {
   <p>Primarily targetted at library developers, avoid major version bumps</p>
 </Appear>
 ---
-
 # Error Boundary
 
 <Appear>
   <p>Allows components to catch errors</p>
   <p>Powered by other new lifecycle methods: componentDidCatch and getDerivedStateFromError</p>
-  <p>(Not currently supported by the lifecycle compat)</p>
+  <p>(Not supported by lifecycle compat)</p>
+  <p>Important caveat: only errors during render & other lifecycle, NOT events</p>
 </Appear>
 
 ```notes
 getDerivedStateFromError parallels getDerivedStateFromProps -- return a state update object.
 ```
-
 ---
-TODO: Error Boundary demo>?
----
-
 <CodeSurfer
   code={require("!raw-loader!./code/error-boundary.js")}
   language="javascript"
@@ -194,7 +172,12 @@ TODO: Error Boundary demo>?
   ]}
 />
 ---
-  <img src={'https://media.giphy.com/media/3o7bu1iM5MSwG2y7NS/giphy.gif'} />
+<img src={'https://media.giphy.com/media/3o7bu1iM5MSwG2y7NS/giphy.gif'} />
+---
+# Error Boundary Demo
+import ErrorBoundaryDemo from './components/ErrorBoundaryDemo'
+
+<ErrorBoundaryDemo />
 ---
 # Fragments & Strings
 <Appear>
@@ -239,13 +222,11 @@ const SomeChildList = () => (
 ```
 
 ---
-
  Shorthand: `<> ... </>`
 <Appear>
   <p>...but we need to upgrade Babel first.</p>
   <p></p>
 </Appear>
-
 ---
 # Strings
 ---
@@ -265,15 +246,12 @@ const HelloThere = ({name}) => (
 );
 ```
 ---
-
 # Portals
 <Appear>
   <p>Render somewhere else.</p>
   <img src={'https://media.giphy.com/media/11eF6JYhWnSRa0/giphy-downsized-large.gif'} />
 </Appear>
-
 ---
-
 ```jsx
 render() {
   // ...
@@ -285,7 +263,6 @@ render() {
 }
 ```
 ---
-
 ```jsx
 render() {
   // ...
@@ -314,7 +291,8 @@ render() {
 }
 ```
 ---
-
+TODO: Portal Demo
+---
 ## v16.1 & 16.2
 
 <Appear>
@@ -322,7 +300,6 @@ render() {
   <img src={'https://y.yarn.co/e773e6ae-790a-4c10-918b-1d941cb9dee0_text_hi.gif'} />
 </Appear>
 ---
-
 # Context
 
 Allows passing data between distant component tree nodes without prop drilling.
@@ -342,45 +319,78 @@ const App = () => (
 );
 ```
 ---
-TODO: Add CodeSurfer look at ContextDemo first??
+<CodeSurfer
+  code={require("!raw-loader!./code/context.js")}
+  language="javascript"
+  steps={[
+    { range: [3, 5], notes: "First, we create our context." },
+    { range: [7, 17], notes: "We construct a component with state and an updater" },
+    { range: [21, 26], notes: "which implements the raw provider." },
+    { range: [31, 35], notes: "Use the consumer to get the current language value," },
+    { range: [38, 48], notes: "but also to get the language updater." },
+    { range: [54, 62], notes: "Put it all together with otherwise unconnected siblings." },
+  ]}
+/>
 ---
+# Context Demo
 import ContextDemo from './components/ContextDemo'
 
 <ContextDemo />
-
 ---
 # lazy & Suspense
 <Appear>
   <p>Lazy allows for easily deferring load & code splitting</p>
   <p>Suspense allows showing a placeholder component while we wait for something to load</p>
-  <img src={'https://media.giphy.com/media/l0ExgJHsbXtzitqVO/giphy.gif'} />
   <p>Essentially this is the same thing we're doing with FetchComponent</p>
+  <img src={'https://thumbs.gfycat.com/SorrowfulAbandonedArcticfox-size_restricted.gif'} />
 </Appear>
 ---
-
-TODO: Show Sloth code?
-
+<CodeSurfer
+  code={require("!raw-loader!./components/Sloth.js")}
+  language="javascript"
+  steps={[
+    { lines: [3], notes: "This is sloth. He's kind of slow." },
+    { range: [5, 9], notes: "...but I made him that way." },
+  ]}
+/>
 ---
+<CodeSurfer
+  code={require("!raw-loader!./components/LazyDemo.js")}
+  language="javascript"
+  steps={[
+    { lines: [3, 4], notes: "Load Sloth normally and a lazy version" },
+    { range: [36, 42], notes: "and wrap in Suspense" },
+  ]}
+/>
+---
+# Lazy Demo
 import LazyDemo from './components/LazyDemo'
 
 <LazyDemo />
-
 ---
 # Memo
 
 <Appear>
   <p>Enables Stateless Functional Components (SFC) to be memoized</p>
   <p>Works like PureComponent, but for SFCs</p>
+  <p>If we do the same thing over and over, at least it'll be fast... </p>
+  <img src={'https://media.giphy.com/media/f6ek1KcvTWPmw/giphy.gif'} />
 </Appear>
-
 ---
-TODO: Show memo code?
+<CodeSurfer
+  code={require("!raw-loader!./components/MemoDemo.js")}
+  language="javascript"
+  steps={[
+    { range: [3, 14], notes: "Here we have a slow component a single prop" },
+    { lines: [16], notes: "and a version using memo" },
+    { range: [71, 73], notes: "then we render the selected version" },
+  ]}
+/>
 ---
-
+# Memo Demo
 import MemoDemo from './components/MemoDemo'
 
 <MemoDemo />
-
 ---
 # Profiler
 <Appear>
@@ -389,14 +399,12 @@ import MemoDemo from './components/MemoDemo'
   <img src={'https://reactjs.org/filtering-commits-683b9d860ef722e1505e5e629df7ef7e.gif'} />
 </Appear>
 ---
-# ReactIs (TODO: maybe remove this?)
+# ReactIs
 <Appear>
   <p>First-party tooling for comparing element types</p>
   <p></p>
 </Appear>
-
 ---
-
 ```jsx
 import React from "react";
 import * as ReactIs from 'react-is';
@@ -406,7 +414,6 @@ ReactIs.typeOf(<div />) === ReactIs.Element; // true
 
 ReactIs.isFragment(<></>); // true
 ReactIs.typeOf(<></>) === ReactIs.Fragment; // true
-
 ```
 ---
 # We Can See The Future!
@@ -414,10 +421,10 @@ ReactIs.typeOf(<></>) === ReactIs.Fragment; // true
 * 16.7 (alpha)
   * Concurrent (née _async_) rendering
   * Hooks
+---
 * ...and beyond
   * Scheduler
   * Cache
-
 ---
 # Questions?
 <Appear>

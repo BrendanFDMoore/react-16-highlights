@@ -22,14 +22,18 @@ class LazyDemo extends React.Component {
       <div>
         <span>{`Lazy is ${lazy ? 'ON' : 'OFF'}`}</span>
         <br />
-        <button onClick={this.toggleLazy} type='button'>{lazy ? 'Turn Off Lazy' : 'Turn On Lazy'}</button>
+        <button onClick={this.toggleLazy} type='button'>
+          {lazy ? 'Turn Off Lazy' : 'Turn On Lazy'}
+        </button>
         <br />
         <br />
         <span>{`Sloth is ${show ? 'SHOWING' : 'HIDDEN'}`}</span>
         <br />
-        <button onClick={this.toggleShow} type='button'>{show ? 'Hide Sloth' : 'Show Sloth'}</button>
+        <button onClick={this.toggleShow} type='button'>
+          {show ? 'Hide Sloth' : 'Show Sloth'}
+        </button>
         <br />
-        <Suspense fallback={<Loader />} maxDuration={1} >
+        <Suspense fallback={<Loader />}>
         {
           show 
           ? ( lazy ? <LazySloth /> : <Sloth />)
