@@ -9,7 +9,8 @@ const SlowComponent = ({ max }) => {
   const sum = nums.reduce((sum, val) => sum=sum+val, 0);
 
   return (
-    `Sum of first ${max} integers: ${sum}`
+    `Sum of first ${max.toLocaleString()}
+    integers: ${sum.toLocaleString()}`
   );
 };
 
@@ -42,27 +43,29 @@ class MemoDemo extends React.Component {
     const max = Math.pow(10, zeros);
     return (
       <div>
-        <button onClick={this.toggleMemo} type='button'>
-          {memo ? 'Memo is ON. Turn off Memo' : 'Memo is OFF. Turn on Memo'}
+        <button onClick={this.toggleMemo}>
+          {memo 
+            ? 'Memo is ON. Turn off Memo' 
+            : 'Memo is OFF. Turn on Memo'}
         </button>
         <br />
         <br />
         <span>{`Count: ${count}`}</span>
         <br />
-        <button onClick={() => this.incrementCount(-1)} type='button'>
+        <button onClick={() => this.incrementCount(-1)}>
           -1
         </button>
-        <button onClick={() => this.incrementCount(1)} type='button'>
+        <button onClick={() => this.incrementCount(1)}>
           +1
         </button>
         <br />
         <br />
-        <span>{`Sum up to: ${max}`}</span>
+        <span>{`Sum up to: ${max.toLocaleString()}`}</span>
         <br />
-        <button onClick={() => this.incrementZeros(-1)} type='button'>
+        <button onClick={() => this.incrementZeros(-1)}>
           /10
         </button>
-        <button onClick={() => this.incrementZeros(1)} type='button'>
+        <button onClick={() => this.incrementZeros(1)}>
           x10
         </button>
         <br />
