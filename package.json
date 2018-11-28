@@ -2,7 +2,13 @@
   "name": "react-16-highlights",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/brendanfdmoore/react-16-highlights"
+  },
+  "homepage": "https://brendanfdmoore.github.io/react-16-highlights",
   "dependencies": {
+    "gh-pages": "^2.0.1",
     "mdx-deck-code-surfer": "^0.5.3",
     "raw-loader": "^0.5.1",
     "react": "^16.6.3",
@@ -11,10 +17,13 @@
   },
   "scripts": {
     "deck": "mdx-deck src/deck.mdx",
+    "build:deck": "mdx-deck build --no-html src/deck.mdx -d build-deck",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn build:deck",
+    "deploy": "gh-pages -d build-deck"
   },
   "eslintConfig": {
     "extends": "react-app"
