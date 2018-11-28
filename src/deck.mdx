@@ -4,15 +4,16 @@ import { Appear, Head } from 'mdx-deck';
 import { Split } from 'mdx-deck/layouts';
 import { CodeSurfer } from 'mdx-deck-code-surfer';
 
-<Head>
-  <title>React 16 Highlights</title>
-</Head>
-
 # React 16
 <Appear>
   <img src={'https://i.pinimg.com/originals/21/6c/4e/216c4eb9707772c378fe76ba4929bf46.gif'} />
-  <p>Brendan Moore, Solution Architect at Rangle</p>
+  <p>Brendan Moore, Solutions Architect at Rangle</p>
 </Appear>
+---
+# Follow Along
+
+#### Slides: https://brendanfdmoore.github.io/react-16-highlights
+#### Code: https://github.com/brendanfdmoore/react-16-highlights
 ---
 # Highlights, up to 16.6
 
@@ -67,7 +68,7 @@ export default Split
   </ul>
 </Appear>
 ---
->When replacing `<A />` with `<B />`, `B.componentWillMount` now always happens before `A.componentWillUnmount`. Previously, `A.componentWillUnmount` could fire first in some cases.
+### When replacing `<A />` with `<B />`, `B.componentWillMount` now always happens **before** `A.componentWillUnmount`. Previously, `A.componentWillUnmount` _could_ fire first in some cases.
 
 _--React changelog_
 ---

@@ -11,6 +11,9 @@
 # production
 /build
 
+#slides
+/build-deck
+
 # misc
 .DS_Store
 .env.local
